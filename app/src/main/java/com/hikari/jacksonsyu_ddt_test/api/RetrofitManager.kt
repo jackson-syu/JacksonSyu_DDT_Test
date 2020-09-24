@@ -24,7 +24,7 @@ class RetrofitManager {
 
     class Load(client: OkHttpClient) {
 
-        lateinit var retrofit: Retrofit
+        var retrofit: Retrofit? = null
 
         private lateinit var client: OkHttpClient
 
@@ -47,14 +47,14 @@ class RetrofitManager {
         }
 
         fun getTestObe(path: String): Observable<Response<TestModel>> {
-            var service: ApiService = retrofit.create(ApiService::class.java)
+            var service: ApiService = retrofit!!.create(ApiService::class.java)
             return service.getTestData(path)
         }
 
         interface ApiService {
-            @GET("{path}")
+            @GET("{index}")
             fun getTestData(
-                @Path("path") path: String
+                @Path("index") path: String
             ): Observable<Response<TestModel>>
         }
 

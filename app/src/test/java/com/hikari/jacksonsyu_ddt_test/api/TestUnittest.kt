@@ -3,6 +3,7 @@ package com.hikari.jacksonsyu_ddt_test.api
 import com.hikari.jacksonsyu_ddt_test.model.TestService
 import org.junit.Before
 import org.junit.Test
+import java.lang.Exception
 import java.util.concurrent.CountDownLatch
 
 /**
@@ -26,16 +27,21 @@ class TestUnittest {
             }
 
             override fun onError(error: String) {
-                json = error
+                json = "error: " + error
                 latch.countDown()
             }
 
         })
 
 
-        latch.await()
+        try {
+            latch.await()
 
-        println(json)
+            println(json)
+        }catch (e: Exception) {
+            println(e.message)
+        }
+
     }
 
 }

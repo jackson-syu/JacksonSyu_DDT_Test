@@ -30,9 +30,14 @@ class TestService {
                 .subscribeOn(Schedulers.io())
                 .observeOn(Schedulers.newThread())
                 .subscribe({
+
+                    println("code: " + it.code())
+                    println("message: " + it.message())
+
                     if(callBack != null) {
-                        var gson = Gson()
-                        callBack.onSuccess(gson.toJson(it.body()))
+                        var gson: Gson = Gson()
+                        var data: TestModel? = it.body()
+                        callBack.onSuccess(gson.toJson(data))
                     }
                 }, {
                     if(callBack != null) {
