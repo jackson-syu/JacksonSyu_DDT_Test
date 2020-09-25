@@ -27,6 +27,9 @@ class OkHttpManager {
             this.timeout = timeout
         }
 
+        /**
+         * clinet建置
+         */
         fun builder(): OkHttpClient {
             var client: OkHttpClient
             var builder: OkHttpClient.Builder
