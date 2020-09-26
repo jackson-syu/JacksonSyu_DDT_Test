@@ -28,6 +28,7 @@ class DownFileService {
                 .subscribe({
 
                     IOHelper.writeResponseToFile(it.body()!!, file)
+//                    IOHelper.writeResponseToCsvFile(it.body()!!, file)
 
                     if(callback != null) {
                         callback.onSuccess(it.message())

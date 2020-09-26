@@ -1,7 +1,7 @@
 package com.hikari.jacksonsyu_ddt_test.util
 
 import android.os.Environment
-import com.github.doyaaaaaken.kotlincsv.client.CsvWriter
+import com.github.doyaaaaaken.kotlincsv.dsl.csvReader
 import okhttp3.ResponseBody
 import java.io.*
 import java.lang.Exception
@@ -15,6 +15,9 @@ class IOHelper {
     companion object {
         private const val TAG = "IOHelper"
 
+        /**
+         * 寫入檔案
+         */
         fun writeResponseToFile(responseBody: ResponseBody, file: File): Boolean {
 
             try {
@@ -29,8 +32,9 @@ class IOHelper {
                     var fileSizeDownloaded: Long = 0
 
                     inputStream = responseBody.byteStream()
+
                     outputStream = FileOutputStream(file)
-                    outputStream.write(byteArrayOf())
+
 
                     while (true) {
                         val read = inputStream!!.read(fileReader)
@@ -59,6 +63,43 @@ class IOHelper {
             }
 
             return false
+        }
+
+        fun csvToMapList(file: File, charsetType: String): MutableList<Map<String, String>> {
+            val keyList: MutableList<String>? = mutableListOf()
+            val csvList: MutableList<String>? = mutableListOf()
+            val csvMapList: MutableList<Map<String, String>>? = mutableListOf()
+
+            csvReader{
+                charset = charsetType
+            }.open(file.path) {
+                readAllAsSequence().forEach {row: List<String> ->
+                    csvList?.add(row.toString())
+                }
+            }
+
+            for(i in 0..csvList!!.size - 1) {
+                if(i == 0) {
+                    val keyString = csvList.get(i).replace(" ", "").replace("[", "").replace("]", "")
+                    val keyArray = keyString.split(",")
+                    for(j in 0..keyArray.size - 1) {
+                        keyList?.add(keyArray[j])
+                    }
+                }else {
+                    val map = mutableMapOf<String, String>()
+
+                    val valueString = csvList.get(i).replace(" ", "").replace("[", "").replace("]", "")
+                    val valueArray = valueString.split(",")
+
+                    for(k in 0..keyList!!.size - 1) {
+                        map.put(keyList.get(k), valueArray[k])
+                    }
+                    csvMapList?.add(map)
+                }
+                println("no_" + i + ": " + csvList.get(i))
+            }
+
+            return csvMapList!!
         }
 
     }

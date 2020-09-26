@@ -1,2 +1,3 @@
+include ':slf4j.api-1.6.1'
 include ':app'
 rootProject.name = "JacksonSyu_DDT_Test"
