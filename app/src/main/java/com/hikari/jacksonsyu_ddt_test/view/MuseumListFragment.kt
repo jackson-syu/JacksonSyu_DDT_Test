@@ -1,8 +1,10 @@
 package com.hikari.jacksonsyu_ddt_test.view
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.hikari.jacksonsyu_ddt_test.R
@@ -10,6 +12,7 @@ import com.hikari.jacksonsyu_ddt_test.adapter.MuseumListAdapter
 import com.hikari.jacksonsyu_ddt_test.base.BaseFragment
 import com.hikari.jacksonsyu_ddt_test.base.ClickPresenter
 import com.hikari.jacksonsyu_ddt_test.databinding.FragmentMuseumListBinding
+import com.hikari.jacksonsyu_ddt_test.model.MuseumDataModel
 import com.hikari.jacksonsyu_ddt_test.viewmodel.MuseumListViewModel
 
 /**
@@ -38,18 +41,39 @@ class MuseumListFragment : BaseFragment<FragmentMuseumListBinding>(), ClickPrese
     override fun onBindView(view: View?, container: ViewGroup?, savedInstanceState: Bundle?) {
 
         viewModel = ViewModelProviders.of(this).get(MuseumListViewModel::class.java)
+
+        initData()
+
         mBinding.vm = viewModel
         mBinding.presenter = this
 
-        initRecyclerView()
+        //test
+        initRecyclerView(mutableListOf())
 
     }
 
-    private fun initRecyclerView() {
+    private fun initData() {
+        viewModel.getMuseumLiveData()?.observe(this, object : Observer<List<MuseumDataModel>> {
+            override fun onChanged(museumListData: List<MuseumDataModel>?) {
+                Log.d(TAG, "initData onChanged ~")
+                initRecyclerView(museumListData)
+            }
+        })
+    }
 
-        mBinding.museumListRecyclerview.layoutManager = LinearLayoutManager(context)
-        mBinding.museumListRecyclerview.adapter = MuseumListAdapter(context!!, viewModel)
+    private fun initRecyclerView(museumListData: List<MuseumDataModel>?) {
 
+        if(museumListData?.size != 0) {
+            mBinding.museumListNoData.visibility = View.GONE
+            mBinding.museumListRecyclerview.visibility = View.VISIBLE
+            mBinding.museumListRecyclerview.layoutManager = LinearLayoutManager(context)
+            var adapter = MuseumListAdapter(context!!, viewModel)
+            mBinding.museumListRecyclerview.adapter = adapter
+            adapter.setMuseumListData(museumListData)
+        }else{
+            mBinding.museumListRecyclerview.visibility = View.GONE
+            mBinding.museumListNoData.visibility = View.VISIBLE
+        }
     }
 
     override fun onClick(v: View) {
@@ -59,7 +83,7 @@ class MuseumListFragment : BaseFragment<FragmentMuseumListBinding>(), ClickPrese
     }
 
     private fun onMenuClick() {
-        viewModel.onMenuClick()
+        viewModel.onMenuClick(context!!)
     }
 
 

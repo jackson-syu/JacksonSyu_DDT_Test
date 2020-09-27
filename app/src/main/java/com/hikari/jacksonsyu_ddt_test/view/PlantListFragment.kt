@@ -50,7 +50,13 @@ class PlantListFragment : BaseFragment<FragmentPlantListBinding>(), ClickPresent
     }
 
     override fun onClick(v: View) {
-        TODO("Not yet implemented")
+        when(v.id) {
+            R.id.plant_list_back -> onBack()
+        }
+    }
+
+    private fun onBack() {
+        viewModel.onBack(activity!!)
     }
 
 }

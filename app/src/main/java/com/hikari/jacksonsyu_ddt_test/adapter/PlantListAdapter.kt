@@ -133,7 +133,13 @@ class PlantListAdapter() : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         }
 
         override fun onClick(v: View) {
-            TODO("Not yet implemented")
+            when(v.id) {
+                R.id.plant_list_header_broswer_btn -> onWebBtn()
+            }
+        }
+
+        private fun onWebBtn() {
+            viewModel?.onBrowserClick()
         }
     }
 }

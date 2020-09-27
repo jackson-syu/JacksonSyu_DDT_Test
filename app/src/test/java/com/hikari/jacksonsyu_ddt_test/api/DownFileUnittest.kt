@@ -1,12 +1,17 @@
 package com.hikari.jacksonsyu_ddt_test.api
 
 import com.github.doyaaaaaken.kotlincsv.dsl.csvReader
+import com.google.gson.Gson
+import com.google.gson.GsonBuilder
+import com.google.gson.reflect.TypeToken
 import com.hikari.jacksonsyu_ddt_test.model.DownFileService
+import com.hikari.jacksonsyu_ddt_test.model.PlantDataModel
 import com.hikari.jacksonsyu_ddt_test.util.IOHelper
 import org.junit.Before
 import org.junit.Test
 import java.io.*
 import java.lang.Exception
+import java.lang.reflect.Type
 import java.net.URL
 import java.util.ArrayList
 import java.util.concurrent.CountDownLatch
@@ -36,13 +41,20 @@ class DownFileUnittest {
 //        println(outputPath)
 //        val testFile: File = File(outputPath)
 
-
+        //別點位置
 //        val testFile: File = File("D:\\HikariWorkspace\\DDTWorkspace\\app\\src\\test\\res\\", "test.cvs")
-        val testFile: File = File("E:\\android\\DDTWorkspace\\JacksonSyu_DDT_Test\\app\\src\\test\\res\\", "test.csv")
 
-        DownFileService.downloadCvsFile(testFile, object : DownFileService.CallBack {
-            override fun onSuccess(jsonString: String) {
-                json = jsonString
+        //動物園館區資料
+        val testFile: File = File("E:\\android\\DDTWorkspace\\JacksonSyu_DDT_Test\\app\\src\\test\\res\\", "test.csv")
+        val url: String = ApiConnection.ZOO_MUSEUM_LIST_URL
+
+        //植物資料
+//        val testFile: File = File("E:\\android\\DDTWorkspace\\JacksonSyu_DDT_Test\\app\\src\\test\\res\\", "test_plant.csv")
+//        val url: String = ApiConnection.PLANT_DATA_URL
+
+        DownFileService.downloadCvsFile(url, testFile, object : DownFileService.CallBack {
+            override fun onSuccess(jsonString: String, code: Int) {
+                json = jsonString + ", " + code
                 latch.countDown()
             }
 
@@ -58,7 +70,25 @@ class DownFileUnittest {
 
             println(json)
 
+            //動物園館區資料
             var csvMapList: MutableList<Map<String, String>>? = IOHelper.csvToMapList(testFile, "big5")
+            //植物資料
+//            var csvMapList: MutableList<Map<String, String>>? = IOHelper.csvToMapList(testFile, "UTF-8")
+
+            var gson: Gson = GsonBuilder().disableHtmlEscaping().create()
+            json = gson.toJson(csvMapList)
+            println(json)
+
+            println("-----------------------------------------------")
+
+//            var type: Type = object : TypeToken<ArrayList<PlantDataModel>>(){}.type
+//            var plantList: List<PlantDataModel> = gson.fromJson<List<PlantDataModel>>(json, type)
+//
+//            for(plant in plantList) {
+//                println(plant.toString())
+//            }
+
+            println("----------------------------------------------")
 
             for (map in csvMapList!!) {
                 println()

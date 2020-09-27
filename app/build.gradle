@@ -57,10 +57,24 @@ dependencies {
     implementation 'com.squareup.okhttp3:logging-interceptor:3.8.1'//非必要依赖， log依赖，如果需要打印OkHttpLog需要添加
     implementation 'com.squareup.okhttp3:okhttp:3.12.1'
 
+    //20200827 引入LiveDate
+    // ViewModel and LiveData
+    implementation "android.arch.lifecycle:extensions:1.1.0"
+// alternatively, just ViewModel
+    implementation "android.arch.lifecycle:viewmodel:1.1.0"
+// alternatively, just LiveData
+    implementation "android.arch.lifecycle:livedata:1.1.0"
+
+    //20200904 Room
+    implementation "androidx.room:room-runtime:2.2.5"
+    annotationProcessor  "androidx.room:room-compiler:2.2.5" // For Java use annotationProcessor instead of kapt
+    implementation "androidx.room:room-rxjava2:2.2.5"
+    testImplementation "androidx.room:room-testing:2.2.5"
+
     //csv
     implementation("com.github.doyaaaaaken:kotlin-csv-jvm:0.11.0")
     testImplementation("com.github.doyaaaaaken:kotlin-csv-jvm:0.11.0")
-//    implementation 'com.opencsv:opencsv:4.6'
-//    testImplementation 'com.opencsv:opencsv:4.6'
 
+    //glide
+    implementation 'com.github.bumptech.glide:glide:4.0.0'
 }

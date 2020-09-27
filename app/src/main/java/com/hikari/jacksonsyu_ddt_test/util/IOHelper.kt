@@ -67,36 +67,29 @@ class IOHelper {
 
         fun csvToMapList(file: File, charsetType: String): MutableList<Map<String, String>> {
             val keyList: MutableList<String>? = mutableListOf()
-            val csvList: MutableList<String>? = mutableListOf()
             val csvMapList: MutableList<Map<String, String>>? = mutableListOf()
 
+            var count = 0
             csvReader{
                 charset = charsetType
             }.open(file.path) {
                 readAllAsSequence().forEach {row: List<String> ->
-                    csvList?.add(row.toString())
-                }
-            }
 
-            for(i in 0..csvList!!.size - 1) {
-                if(i == 0) {
-                    val keyString = csvList.get(i).replace(" ", "").replace("[", "").replace("]", "")
-                    val keyArray = keyString.split(",")
-                    for(j in 0..keyArray.size - 1) {
-                        keyList?.add(keyArray[j])
+                    if(count == 0) {
+                        for(i in 0..row.size - 1) {
+                            keyList?.add(row.get(i))
+                        }
+                    }else{
+                        val map = mutableMapOf<String, String>()
+                        for(j in 0..row.size - 1) {
+                            map.put(keyList!!.get(j), row.get(j))
+                        }
+                        csvMapList?.add(map)
                     }
-                }else {
-                    val map = mutableMapOf<String, String>()
 
-                    val valueString = csvList.get(i).replace(" ", "").replace("[", "").replace("]", "")
-                    val valueArray = valueString.split(",")
-
-                    for(k in 0..keyList!!.size - 1) {
-                        map.put(keyList.get(k), valueArray[k])
-                    }
-                    csvMapList?.add(map)
+//                    println("no_" + count + ": " + row.toString())
+                    count++
                 }
-                println("no_" + i + ": " + csvList.get(i))
             }
 
             return csvMapList!!

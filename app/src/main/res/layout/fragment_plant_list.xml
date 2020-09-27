@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
+
         <variable
             name="vm"
             type="com.hikari.jacksonsyu_ddt_test.viewmodel.PlantListViewModel" />
@@ -26,28 +27,29 @@
 
                 <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="?attr/actionBarSize">
+                    android:layout_height="?attr/actionBarSize"
+                    app:layout_scrollFlags="scroll|enterAlways">
 
                     <ImageView
-                        android:id="@+id/plant_list_menu"
-                        android:layout_centerVertical="true"
+                        android:id="@+id/plant_list_back"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:adjustViewBounds="true"
+                        android:layout_centerVertical="true"
                         android:layout_marginLeft="15dp"
-                        android:src="@mipmap/back_icon"
-                        android:onClick="@{(v)->presenter.onClick(v)}"/>
+                        android:adjustViewBounds="true"
+                        android:onClick="@{(v)->presenter.onClick(v)}"
+                        android:src="@mipmap/back_icon" />
 
                     <TextView
                         android:id="@+id/plant_list_title"
-                        android:layout_marginLeft="30dp"
-                        android:layout_toRightOf="@+id/plant_list_menu"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
-                        android:textSize="@dimen/bar_title"
+                        android:layout_marginLeft="30dp"
+                        android:layout_toRightOf="@+id/plant_list_back"
+                        android:text="兩棲爬蟲動物館"
                         android:textColor="#000000"
-                        android:text="兩棲爬蟲動物館"/>
+                        android:textSize="@dimen/bar_title" />
 
                 </RelativeLayout>
 
@@ -57,7 +59,7 @@
                 android:id="@+id/plant_list_recyclerview"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
+                app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
         </androidx.coordinatorlayout.widget.CoordinatorLayout>
 

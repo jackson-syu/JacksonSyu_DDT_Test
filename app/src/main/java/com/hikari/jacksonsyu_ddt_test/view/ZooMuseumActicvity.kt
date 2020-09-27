@@ -42,7 +42,8 @@ class ZooMuseumActicvity : BaseActivity<ActivityZooMuseumActicvityBinding>() {
         fragmentManager = supportFragmentManager
 
 //        toFragment(MuseumListFragment.newInstance())
-        toFragment(PlantListFragment.newInstance())
+//        toFragment(PlantListFragment.newInstance())
+        toFragment(PlantDataFragment.newInstance())
     }
 
     fun toFragment(fragment: Fragment) {
@@ -51,4 +52,18 @@ class ZooMuseumActicvity : BaseActivity<ActivityZooMuseumActicvityBinding>() {
         fragmentTransaction.commitAllowingStateLoss()
     }
 
+    override fun onBackPressed() {
+        onBack()
+    }
+
+    fun onBack() {
+        var fragment: Fragment? = fragmentManager?.findFragmentById(R.id.main_fragment)
+        if(fragment != null) {
+            if(fragment is PlantListFragment) {
+                toFragment(MuseumListFragment.newInstance())
+            }else if(fragment is PlantDataFragment) {
+                toFragment(PlantListFragment.newInstance())
+            }
+        }
+    }
 }

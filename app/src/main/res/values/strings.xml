@@ -2,4 +2,6 @@
     <string name="app_name">JacksonSyu_DDT_Test</string>
 
     <string name="museum_list_title">臺北市立動物園</string>
+
+    <string name="museum_no_time">無休館資訊</string>
 </resources>
