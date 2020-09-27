@@ -7,7 +7,7 @@ data class PlantDataModel(
     val F_Code: String? = null,
     val F_Family: String? = null,
     val F_Feature: String? = null,
-    val F_Function: String? = null,
+    val F_F_FunctionApplication: String? = null,
     val F_Genus: String? = null,
     val F_Geo: String? = null,
     val F_Keywords: String? = null,
@@ -38,6 +38,6 @@ data class PlantDataModel(
     val F_pdf02_URL: String? = null
 ) {
     override fun toString(): String {
-        return "PlantDataModel(F_AlsoKnown='$F_AlsoKnown', F_Brief='$F_Brief', F_CID='$F_CID', F_Code='$F_Code', F_Family='$F_Family', F_Feature='$F_Feature', F_Function='$F_Function', F_Genus='$F_Genus', F_Geo='$F_Geo', F_Keywords='$F_Keywords', F_Location='$F_Location', F_Name_Ch='$F_Name_Ch', F_Name_En='$F_Name_En', F_Name_Latin='$F_Name_Latin', F_Pic01_ALT='$F_Pic01_ALT', F_Pic01_URL='$F_Pic01_URL', F_Pic02_ALT='$F_Pic02_ALT', F_Pic02_URL='$F_Pic02_URL', F_Pic03_ALT='$F_Pic03_ALT', F_Pic03_URL='$F_Pic03_URL', F_Pic04_ALT='$F_Pic04_ALT', F_Pic04_URL='$F_Pic04_URL', F_Summary='$F_Summary', F_Update='$F_Update', F_Vedio_URL='$F_Vedio_URL', F_Voice01_ALT='$F_Voice01_ALT', F_Voice01_URL='$F_Voice01_URL', F_Voice02_ALT='$F_Voice02_ALT', F_Voice02_URL='$F_Voice02_URL', F_Voice03_ALT='$F_Voice03_ALT', F_Voice03_URL='$F_Voice03_URL', F_pdf01_ALT='$F_pdf01_ALT', F_pdf01_URL='$F_pdf01_URL', F_pdf02_ALT='$F_pdf02_ALT', F_pdf02_URL='$F_pdf02_URL')"
+        return "PlantDataModel(F_AlsoKnown='$F_AlsoKnown', F_Brief='$F_Brief', F_CID='$F_CID', F_Code='$F_Code', F_Family='$F_Family', F_Feature='$F_Feature', F_Function='$F_F_FunctionApplication', F_Genus='$F_Genus', F_Geo='$F_Geo', F_Keywords='$F_Keywords', F_Location='$F_Location', F_Name_Ch='$F_Name_Ch', F_Name_En='$F_Name_En', F_Name_Latin='$F_Name_Latin', F_Pic01_ALT='$F_Pic01_ALT', F_Pic01_URL='$F_Pic01_URL', F_Pic02_ALT='$F_Pic02_ALT', F_Pic02_URL='$F_Pic02_URL', F_Pic03_ALT='$F_Pic03_ALT', F_Pic03_URL='$F_Pic03_URL', F_Pic04_ALT='$F_Pic04_ALT', F_Pic04_URL='$F_Pic04_URL', F_Summary='$F_Summary', F_Update='$F_Update', F_Vedio_URL='$F_Vedio_URL', F_Voice01_ALT='$F_Voice01_ALT', F_Voice01_URL='$F_Voice01_URL', F_Voice02_ALT='$F_Voice02_ALT', F_Voice02_URL='$F_Voice02_URL', F_Voice03_ALT='$F_Voice03_ALT', F_Voice03_URL='$F_Voice03_URL', F_pdf01_ALT='$F_pdf01_ALT', F_pdf01_URL='$F_pdf01_URL', F_pdf02_ALT='$F_pdf02_ALT', F_pdf02_URL='$F_pdf02_URL')"
     }
 }

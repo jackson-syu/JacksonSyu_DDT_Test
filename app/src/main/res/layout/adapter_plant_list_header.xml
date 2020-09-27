@@ -75,7 +75,8 @@
                     android:layout_alignParentRight="true"
                     android:text="在網頁開啟"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content"
+                    android:onClick="@{(v)->presenter.onClick(v)}"/>
 
             </RelativeLayout>
 

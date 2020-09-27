@@ -21,15 +21,15 @@ import java.lang.reflect.Type
  */
 class MuseumListRepository private constructor(context: Context){
 
-    private val museumLiveData: MutableLiveData<List<MuseumDataModel>>? = MutableLiveData()
+    private val museumListLiveData: MutableLiveData<List<MuseumDataModel>>? = MutableLiveData()
     private var context: Context? = null
 
     companion object {
 
         private const val TAG = "MuseumListRepository"
 
-        private const val TYPE_FIRST = 0
-        private const val TYPE_NO_FIRST = 1
+        const val TYPE_FIRST = 0
+        const val TYPE_NO_FIRST = 1
 
         @Volatile private var INSTANCE: MuseumListRepository? = null
 
@@ -53,7 +53,7 @@ class MuseumListRepository private constructor(context: Context){
 
         loadMuseumListFileData(context!!, TYPE_FIRST)
 
-        return museumLiveData
+        return museumListLiveData
     }
 
     fun loadMuseumListFileData(context: Context, enterType: Int) {
@@ -106,9 +106,9 @@ class MuseumListRepository private constructor(context: Context){
                         type
                     )
                     if (enterType == TYPE_FIRST) {
-                        museumLiveData?.value = museumList
+                        museumListLiveData?.value = museumList
                     } else {
-                        museumLiveData?.postValue(museumList)
+                        museumListLiveData?.postValue(museumList)
                     }
 
                 }

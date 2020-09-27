@@ -77,7 +77,12 @@ class IOHelper {
 
                     if(count == 0) {
                         for(i in 0..row.size - 1) {
-                            keyList?.add(row.get(i))
+
+                            var key = row.get(i)
+                            if(key.contains("&")) {
+                                key = key.replace("&", "")
+                            }
+                            keyList?.add(key)
                         }
                     }else{
                         val map = mutableMapOf<String, String>()

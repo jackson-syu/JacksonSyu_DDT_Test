@@ -1,24 +1,24 @@
 package com.hikari.jacksonsyu_ddt_test.viewmodel
 
+import android.app.Activity
 import android.app.Application
 import android.content.Context
 import android.content.DialogInterface
 import android.util.Log
-import android.view.Gravity
-import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import com.hikari.jacksonsyu_ddt_test.data.MuseumListRepository
 import com.hikari.jacksonsyu_ddt_test.model.MuseumDataModel
+import com.hikari.jacksonsyu_ddt_test.view.PlantListFragment
+import com.hikari.jacksonsyu_ddt_test.view.ZooMuseumActicvity
 
 /**
  * Created by hikari on 2020/9/26
  */
 class MuseumListViewModel(application: Application) : AndroidViewModel(application){
 
-    private var museumliveData: MutableLiveData<List<MuseumDataModel>>? = MutableLiveData()
+    private var museumLiveData: MutableLiveData<List<MuseumDataModel>>? = MutableLiveData()
     private var repo: MuseumListRepository? = null
 
     companion object {
@@ -26,13 +26,12 @@ class MuseumListViewModel(application: Application) : AndroidViewModel(applicati
     }
 
     init {
-
         repo = MuseumListRepository.getInstance(application)
-        museumliveData = repo?.getMuseumListLiveData()
+        museumLiveData = repo?.getMuseumListLiveData()
     }
 
     fun getMuseumLiveData(): MutableLiveData<List<MuseumDataModel>>? {
-        return museumliveData
+        return museumLiveData
     }
 
     fun onMenuClick(context: Context) {
@@ -48,7 +47,17 @@ class MuseumListViewModel(application: Application) : AndroidViewModel(applicati
     }
 
     //-----item-----
-    fun onItemClick() {
+    fun onItemClick(activity: Activity, museumDataModel: MuseumDataModel) {
         Log.d(TAG, "onItemClick~")
+        if(activity is ZooMuseumActicvity) {
+            var fragment: PlantListFragment = PlantListFragment.newInstance()
+            fragment.setMuseumData(museumDataModel)
+            activity.toFragment(fragment)
+        }
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+        Log.d(TAG, "onCleared~")
     }
 }

@@ -3,6 +3,8 @@ package com.hikari.jacksonsyu_ddt_test.util
 import android.app.Activity
 import android.content.Context
 import android.util.DisplayMetrics
+import android.view.animation.Animation
+import android.view.animation.AnimationUtils
 
 
 /**
@@ -30,5 +32,20 @@ class ViewHelper {
             val metrics = context.resources.displayMetrics
             return metrics.density
         }
+
+        fun prepareAnimation(context: Context?, animResId: Int, runOnEnd: Runnable?): Animation? {
+            val animation: Animation = AnimationUtils.loadAnimation(context, animResId)
+            animation.setAnimationListener(object : Animation.AnimationListener {
+                override fun onAnimationStart(animation: Animation?) {}
+                override fun onAnimationEnd(animation: Animation?) {
+                    runOnEnd?.run()
+                }
+
+                override fun onAnimationRepeat(animation: Animation?) {}
+            })
+            return animation
+        }
+
+
     }
 }

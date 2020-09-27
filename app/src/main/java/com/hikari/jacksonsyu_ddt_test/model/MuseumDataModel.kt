@@ -1,7 +1,5 @@
 package com.hikari.jacksonsyu_ddt_test.model
 
-import androidx.annotation.Nullable
-
 data class MuseumDataModel(
     val E_Category: String? = null,
     val E_Geo: String? = null,

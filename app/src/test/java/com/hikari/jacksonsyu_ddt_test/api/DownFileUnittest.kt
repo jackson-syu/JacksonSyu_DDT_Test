@@ -45,12 +45,12 @@ class DownFileUnittest {
 //        val testFile: File = File("D:\\HikariWorkspace\\DDTWorkspace\\app\\src\\test\\res\\", "test.cvs")
 
         //動物園館區資料
-        val testFile: File = File("E:\\android\\DDTWorkspace\\JacksonSyu_DDT_Test\\app\\src\\test\\res\\", "test.csv")
-        val url: String = ApiConnection.ZOO_MUSEUM_LIST_URL
+//        val testFile: File = File("E:\\android\\DDTWorkspace\\JacksonSyu_DDT_Test\\app\\src\\test\\res\\", "test.csv")
+//        val url: String = ApiConnection.ZOO_MUSEUM_LIST_URL
 
         //植物資料
-//        val testFile: File = File("E:\\android\\DDTWorkspace\\JacksonSyu_DDT_Test\\app\\src\\test\\res\\", "test_plant.csv")
-//        val url: String = ApiConnection.PLANT_DATA_URL
+        val testFile: File = File("E:\\android\\DDTWorkspace\\JacksonSyu_DDT_Test\\app\\src\\test\\res\\", "test_plant.csv")
+        val url: String = ApiConnection.PLANT_DATA_URL
 
         DownFileService.downloadCvsFile(url, testFile, object : DownFileService.CallBack {
             override fun onSuccess(jsonString: String, code: Int) {
@@ -71,9 +71,9 @@ class DownFileUnittest {
             println(json)
 
             //動物園館區資料
-            var csvMapList: MutableList<Map<String, String>>? = IOHelper.csvToMapList(testFile, "big5")
+//            var csvMapList: MutableList<Map<String, String>>? = IOHelper.csvToMapList(testFile, "big5")
             //植物資料
-//            var csvMapList: MutableList<Map<String, String>>? = IOHelper.csvToMapList(testFile, "UTF-8")
+            var csvMapList: MutableList<Map<String, String>>? = IOHelper.csvToMapList(testFile, "UTF-8")
 
             var gson: Gson = GsonBuilder().disableHtmlEscaping().create()
             json = gson.toJson(csvMapList)
@@ -81,12 +81,12 @@ class DownFileUnittest {
 
             println("-----------------------------------------------")
 
-//            var type: Type = object : TypeToken<ArrayList<PlantDataModel>>(){}.type
-//            var plantList: List<PlantDataModel> = gson.fromJson<List<PlantDataModel>>(json, type)
-//
-//            for(plant in plantList) {
-//                println(plant.toString())
-//            }
+            var type: Type = object : TypeToken<ArrayList<PlantDataModel>>(){}.type
+            var plantList: List<PlantDataModel> = gson.fromJson<List<PlantDataModel>>(json, type)
+
+            for(plant in plantList) {
+                println(plant.toString())
+            }
 
             println("----------------------------------------------")
 

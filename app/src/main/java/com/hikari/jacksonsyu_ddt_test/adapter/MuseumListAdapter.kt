@@ -21,6 +21,7 @@ import java.lang.Exception
 class MuseumListAdapter() : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     private var context: Context? = null
+    private var activity: Activity? = null
     private var viewModel: MuseumListViewModel? = null
     private var museumListData: List<MuseumDataModel>? = null
 
@@ -28,8 +29,9 @@ class MuseumListAdapter() : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         private const val TAG = "MuseumListAdapter"
     }
 
-    constructor(context: Context, viewModel: MuseumListViewModel) : this() {
+    constructor(context: Context, activity: Activity, viewModel: MuseumListViewModel) : this() {
         this.context = context
+        this.activity = activity
         this.viewModel = viewModel
     }
 
@@ -111,7 +113,7 @@ class MuseumListAdapter() : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         }
 
         private fun itemClick() {
-            viewModel?.onItemClick()
+            viewModel?.onItemClick(activity!!, museumDataModel!!)
         }
 
     }

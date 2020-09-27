@@ -47,7 +47,6 @@ class MuseumListFragment : BaseFragment<FragmentMuseumListBinding>(), ClickPrese
         mBinding.vm = viewModel
         mBinding.presenter = this
 
-        //test
         initRecyclerView(mutableListOf())
 
     }
@@ -67,7 +66,7 @@ class MuseumListFragment : BaseFragment<FragmentMuseumListBinding>(), ClickPrese
             mBinding.museumListNoData.visibility = View.GONE
             mBinding.museumListRecyclerview.visibility = View.VISIBLE
             mBinding.museumListRecyclerview.layoutManager = LinearLayoutManager(context)
-            var adapter = MuseumListAdapter(context!!, viewModel)
+            var adapter = MuseumListAdapter(context!!, activity!!, viewModel)
             mBinding.museumListRecyclerview.adapter = adapter
             adapter.setMuseumListData(museumListData)
         }else{

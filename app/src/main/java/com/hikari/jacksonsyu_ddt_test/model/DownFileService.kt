@@ -1,13 +1,16 @@
 package com.hikari.jacksonsyu_ddt_test.model
 
+import android.database.Observable
 import android.os.Environment
 import com.hikari.jacksonsyu_ddt_test.api.ApiConnection
 import com.hikari.jacksonsyu_ddt_test.api.OkHttpManager
 import com.hikari.jacksonsyu_ddt_test.api.RetrofitManager
 import com.hikari.jacksonsyu_ddt_test.base.BaseModelService
 import com.hikari.jacksonsyu_ddt_test.util.IOHelper
+import com.hikari.jacksonsyu_ddt_test.util.ResponseBodyToFileTask
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
+import io.reactivex.functions.Function
 import io.reactivex.schedulers.Schedulers
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import java.io.File
@@ -34,12 +37,28 @@ class DownFileService : BaseModelService{
 //                .observeOn(Schedulers.newThread())
                 .subscribe({
 
-                    IOHelper.writeResponseToFile(it.body()!!, file)
+//                    IOHelper.writeResponseToFile(it.body()!!, file)
 //                    IOHelper.writeResponseToCsvFile(it.body()!!, file)
 
-                    if(callback != null) {
-                        callback.onSuccess(it.message(), it.code())
-                    }
+                    ResponseBodyToFileTask(it.body()!!, file, object : ResponseBodyToFileTask.CallBack {
+                        override fun onSuccess() {
+                            if(callback != null) {
+                                callback.onSuccess(it.message(), it.code())
+                            }
+                        }
+
+                        override fun onError(error: String) {
+                            if(callback != null) {
+                                callback.onError(error)
+                            }
+                        }
+
+                    }).execute()
+
+
+//                    if(callback != null) {
+//                        callback.onSuccess(it.message(), it.code())
+//                    }
 
                 }, {
 
