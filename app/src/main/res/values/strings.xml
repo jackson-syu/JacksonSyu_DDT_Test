@@ -1,3 +1,13 @@
 <resources>
     <string name="app_name">JacksonSyu_DDT_Test</string>
+
+    <string name="museum_list_title">臺北市立動物園</string>
+
+    <string name="museum_no_time">無休館資訊</string>
+
+
+    <string name="permissions_notifi_title">權限存取允許說明</string>
+    <string name="permissions_notifi_message">請開啟檔案儲存權限，可繼續瀏覽相關資料</string>
+    <string name="permissions_notifi_end">您確定要拒絕此權限嗎 ?</string>
+    <string name="permissions_notifi_write_external_storage">請開啟檔案儲存權限，可保障下載資料的完整性!</string>
 </resources>

@@ -11,7 +11,7 @@ import androidx.fragment.app.Fragment
 /**
  * Created by hikari on 2020/9/23
  */
-open abstract class BaseFragment<T : ViewDataBinding> : Fragment() {
+abstract class BaseFragment<T : ViewDataBinding> : Fragment() {
 
     lateinit var mBinding: T
     lateinit var mView: View
@@ -21,11 +21,12 @@ open abstract class BaseFragment<T : ViewDataBinding> : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return super.onCreateView(inflater, container, savedInstanceState)
 
-        mView = LayoutInflater.from(context).inflate(getLayoutId(), null)
+        mView = LayoutInflater.from(this.context).inflate(getLayoutId(), null)
         mBinding = DataBindingUtil.bind(mView)!!
         onBindView(mView, container, savedInstanceState)
+
+        return mView
     }
 
     abstract fun getLayoutId(): Int

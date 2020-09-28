@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="vm"
+            type="com.hikari.jacksonsyu_ddt_test.viewmodel.MuseumListViewModel" />
+
+        <variable
+            name="presenter"
+            type="com.hikari.jacksonsyu_ddt_test.base.ClickPresenter" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/item_background"
+        android:paddingTop="1dp">
+
+        <LinearLayout
+            android:id="@+id/museum_list_item_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/item_layout_voices"
+            android:clickable="true"
+            android:orientation="horizontal"
+            android:padding="10dp"
+            tools:ignore="MissingConstraints"
+            android:onClick="@{(v)->presenter.onClick(v)}">
+
+            <com.hikari.jacksonsyu_ddt_test.coustom.CropImageView
+                android:id="@+id/museum_list_item_img"
+                android:layout_width="120dp"
+                android:layout_height="120dp"
+                android:adjustViewBounds="true"
+                android:src="@mipmap/test_big_img" />
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="10dp"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/museum_list_item_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text="兩棲爬蟲動物館"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/H1" />
+
+                <TextView
+                    android:id="@+id/museum_list_item_detial"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:ellipsize="end"
+                    android:maxLines="2"
+                    android:text="兩棲爬蟲動物館兩棲爬蟲動物館兩棲爬蟲動物館兩棲爬蟲動物館兩棲爬蟲動物館兩棲爬蟲動物館"
+                    android:textSize="@dimen/H2" />
+
+                <TextView
+                    android:id="@+id/museum_list_item_time"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text="每月第四個週一休館"
+                    android:textSize="@dimen/H2" />
+
+
+            </LinearLayout>
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="center_vertical"
+                android:adjustViewBounds="true"
+                android:src="@mipmap/next_icon" />
+
+        </LinearLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

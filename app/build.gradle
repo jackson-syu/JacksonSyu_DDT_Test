@@ -1,6 +1,7 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
 
 android {
     compileSdkVersion 29
@@ -10,7 +11,7 @@ android {
         minSdkVersion 19
         targetSdkVersion 29
         versionCode 1
-        versionName "1.0"
+        versionName "1.0.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -19,6 +20,12 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+
+        applicationVariants.all { variant ->
+            variant.outputs.all {
+                outputFileName = "JacksonSyuDDTTest-${variant.versionCode}-${variant.versionName}-${releaseTime()}.apk"
+            }
         }
     }
 
@@ -38,6 +45,9 @@ dependencies {
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
 
+    //viewmodel
+    implementation "android.arch.lifecycle:extensions:1.1.1"
+
     //ui
     implementation 'com.google.android.material:material:1.2.1'
     implementation 'androidx.recyclerview:recyclerview:1.1.0'
@@ -54,4 +64,28 @@ dependencies {
     implementation 'com.squareup.okhttp3:logging-interceptor:3.8.1'//非必要依赖， log依赖，如果需要打印OkHttpLog需要添加
     implementation 'com.squareup.okhttp3:okhttp:3.12.1'
 
+    //20200827 引入LiveDate
+    // ViewModel and LiveData
+    implementation "android.arch.lifecycle:extensions:1.1.0"
+// alternatively, just ViewModel
+    implementation "android.arch.lifecycle:viewmodel:1.1.0"
+// alternatively, just LiveData
+    implementation "android.arch.lifecycle:livedata:1.1.0"
+
+    //20200904 Room
+    implementation "androidx.room:room-runtime:2.2.5"
+    kapt  "androidx.room:room-compiler:2.2.5" // For Java use annotationProcessor instead of kapt
+    implementation "androidx.room:room-rxjava2:2.2.5"
+    testImplementation "androidx.room:room-testing:2.2.5"
+
+    //csv
+    implementation("com.github.doyaaaaaken:kotlin-csv-jvm:0.11.0")
+    testImplementation("com.github.doyaaaaaken:kotlin-csv-jvm:0.11.0")
+
+    //glide
+    implementation 'com.github.bumptech.glide:glide:4.11.0'
+}
+//获取编译时间
+static def releaseTime() {
+    return new Date().format("yyyy-MM-dd", TimeZone.getTimeZone("UTC"))
 }
