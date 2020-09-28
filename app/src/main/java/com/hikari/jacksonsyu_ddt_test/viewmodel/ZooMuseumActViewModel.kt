@@ -8,5 +8,4 @@ class ZooMuseumActViewModel {
         private const val TAG = "ZooMuseumActViewModel"
     }
 
-
 }

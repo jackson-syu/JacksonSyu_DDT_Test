@@ -11,7 +11,7 @@ import androidx.databinding.ViewDataBinding
 /**
  * Created by hikari on 2020/9/23
  */
-open abstract class BaseActivity<T : ViewDataBinding> : AppCompatActivity() {
+abstract class BaseActivity<T : ViewDataBinding> : AppCompatActivity() {
     lateinit var mBinding: T
 
     override fun onCreate(savedInstanceState: Bundle?) {

@@ -1,20 +1,12 @@
-package com.hikari.jacksonsyu_ddt_test.model
+package com.hikari.jacksonsyu_ddt_test.api
 
-import android.database.Observable
-import android.os.Environment
-import com.hikari.jacksonsyu_ddt_test.api.ApiConnection
-import com.hikari.jacksonsyu_ddt_test.api.OkHttpManager
-import com.hikari.jacksonsyu_ddt_test.api.RetrofitManager
 import com.hikari.jacksonsyu_ddt_test.base.BaseModelService
-import com.hikari.jacksonsyu_ddt_test.util.IOHelper
 import com.hikari.jacksonsyu_ddt_test.util.ResponseBodyToFileTask
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
-import io.reactivex.functions.Function
 import io.reactivex.schedulers.Schedulers
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import java.io.File
-import java.net.URL
 
 /**
  * Created by hikari on 2020/9/25.
@@ -25,7 +17,7 @@ class DownFileService : BaseModelService{
 
         private var disposable: Disposable? = null
 
-        fun downloadCvsFile(url: String, file: File, callback: CallBack) {
+        fun downloadCvsFile(url: String, file: File, callback: CallBack?) {
 
             val baseUrl: String = ApiConnection.getUrlDomain(url)
 

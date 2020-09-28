@@ -67,8 +67,8 @@ class PlantDataFragment : BaseFragment<FragmentPlantDataBinding>(), ClickPresent
         mBinding.plantDataAlsoKnown.setText(plantDataModel?.F_AlsoKnown)
         mBinding.plantDataBrief.setText(plantDataModel?.F_Brief)
         mBinding.plantDataFeature.setText(plantDataModel?.F_Feature)
-        Log.d(TAG, "F_F_FunctionApplication: " + plantDataModel?.F_F_FunctionApplication)
-        mBinding.plantDataFunction.setText(plantDataModel?.F_F_FunctionApplication)
+        Log.d(TAG, "F_F_FunctionApplication: " + plantDataModel?.F_FunctionApplication)
+        mBinding.plantDataFunction.setText(plantDataModel?.F_FunctionApplication)
         mBinding.plantDataUddateTime.setText(plantDataModel?.F_Update)
     }
 

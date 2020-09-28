@@ -56,10 +56,11 @@ class PlantListFragment : BaseFragment<FragmentPlantListBinding>(), ClickPresent
 
         mBinding.vm = viewModel
         mBinding.presenter = this
+        mBinding.lifecycleOwner = this
 
         initView()
 
-        initRecyclerView(mutableListOf());
+        initRecyclerView();
     }
 
     private fun initData() {
@@ -78,7 +79,7 @@ class PlantListFragment : BaseFragment<FragmentPlantListBinding>(), ClickPresent
         }
     }
 
-    private fun initRecyclerView(plantListData: List<PlantDataModel>?) {
+    private fun initRecyclerView() {
 
         mBinding.plantListRecyclerview.visibility = View.VISIBLE
         mBinding.plantListRecyclerview.layoutManager = LinearLayoutManager(context)

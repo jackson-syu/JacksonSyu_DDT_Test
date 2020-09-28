@@ -46,6 +46,7 @@ class MuseumListFragment : BaseFragment<FragmentMuseumListBinding>(), ClickPrese
 
         mBinding.vm = viewModel
         mBinding.presenter = this
+        mBinding.lifecycleOwner = this
 
         initRecyclerView(mutableListOf())
 

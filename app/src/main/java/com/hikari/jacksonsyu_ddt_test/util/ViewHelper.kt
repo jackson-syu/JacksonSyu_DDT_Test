@@ -16,7 +16,7 @@ class ViewHelper {
 
         fun getWindowWidth(mActivity: Activity): Int {
             val metrics = DisplayMetrics()
-            mActivity?.windowManager?.defaultDisplay?.getMetrics(metrics)
+            mActivity.windowManager?.defaultDisplay?.getMetrics(metrics)
             return metrics.widthPixels
         }
 

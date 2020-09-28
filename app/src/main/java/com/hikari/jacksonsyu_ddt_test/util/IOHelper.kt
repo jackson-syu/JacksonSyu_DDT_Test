@@ -28,7 +28,6 @@ class IOHelper {
                 try {
 
                     var fileReader = ByteArray(4096)
-                    var fileSize = responseBody.contentLength()
                     var fileSizeDownloaded: Long = 0
 
                     inputStream = responseBody.byteStream()

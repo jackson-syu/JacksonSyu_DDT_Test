@@ -29,7 +29,7 @@ class RetrofitManager {
 
         var retrofit: Retrofit? = null
 
-        private lateinit var client: OkHttpClient
+        private var client: OkHttpClient? = null
 
         init {
             this.client = client
@@ -46,7 +46,7 @@ class RetrofitManager {
                 .baseUrl(baseUrl)
                 .addCallAdapterFactory(factory)
                 .addConverterFactory(GsonConverterFactory.create(gson))
-                .client(client)
+                .client(client!!)
                 .build()
 
             return this

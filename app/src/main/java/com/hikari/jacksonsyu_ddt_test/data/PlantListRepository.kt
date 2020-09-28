@@ -2,16 +2,21 @@ package com.hikari.jacksonsyu_ddt_test.data
 
 import android.content.Context
 import android.util.Log
-import android.widget.Toast
 import androidx.lifecycle.MutableLiveData
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.google.gson.reflect.TypeToken
 import com.hikari.jacksonsyu_ddt_test.api.ApiConnection
-import com.hikari.jacksonsyu_ddt_test.model.DownFileService
-import com.hikari.jacksonsyu_ddt_test.model.MuseumDataModel
+import com.hikari.jacksonsyu_ddt_test.api.DownFileService
 import com.hikari.jacksonsyu_ddt_test.model.PlantDataModel
+import com.hikari.jacksonsyu_ddt_test.room.PlantDataDao
+import com.hikari.jacksonsyu_ddt_test.room.PlantDataEntity
+import com.hikari.jacksonsyu_ddt_test.room.PlantDatabase
 import com.hikari.jacksonsyu_ddt_test.util.IOHelper
+import com.hikari.jacksonsyu_ddt_test.util.ToastHelper
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.Disposable
+import io.reactivex.schedulers.Schedulers
 import java.io.File
 import java.io.IOException
 import java.lang.Exception
@@ -25,6 +30,9 @@ class PlantListRepository private constructor(context: Context){
 
     private var plantListLiveData: MutableLiveData<List<PlantDataModel>>? = MutableLiveData()
     private var context: Context? = null
+
+    private var dao: PlantDataDao? = null
+    private var dbDisposable: Disposable? = null
 
     companion object {
 
@@ -49,6 +57,8 @@ class PlantListRepository private constructor(context: Context){
     init {
         var weakContext: WeakReference<Context> = WeakReference(context)
         this.context = weakContext.get()
+
+        dao = PlantDatabase.getInstance(weakContext.get()!!)?.getPlantDataDao()
     }
 
     fun getPlantListLiveData(): MutableLiveData<List<PlantDataModel>>? {
@@ -69,19 +79,19 @@ class PlantListRepository private constructor(context: Context){
             Log.d(TAG, "file exists ~")
             downloadCvsFile(url, file, enterType)
 
-            Toast.makeText(context, "載入中請稍後...", Toast.LENGTH_SHORT).show()
+            ToastHelper.showToast(context, "載入中請稍後...")
         }else {
             Log.d(TAG, "createNewFile ~")
-            file.parentFile.mkdirs()
+            file.parentFile?.mkdirs()
             try {
                 file.createNewFile()
                 downloadCvsFile(url, file, enterType)
-                Toast.makeText(context, "載入中請稍後...", Toast.LENGTH_SHORT).show()
+                ToastHelper.showToast(context, "載入中請稍後...")
 
             } catch (e: IOException) {
                 Log.d(TAG, "createNewFile error ~")
                 e.printStackTrace()
-                Toast.makeText(context, "檔案新增失敗", Toast.LENGTH_SHORT).show()
+                ToastHelper.showToast(context, "檔案新增失敗")
             }
         }
 
@@ -107,6 +117,10 @@ class PlantListRepository private constructor(context: Context){
                         } else {
                             plantListLiveData?.postValue(plantList)
                         }
+
+                        //新增DB
+                        insertAllPlantDataToDB(PlantDataModel.flatEntityListFromModelList(plantList))
+
                     }catch (e: Exception) {
                         e.printStackTrace()
                         Log.d(TAG, "error: " + e.message)
@@ -117,9 +131,68 @@ class PlantListRepository private constructor(context: Context){
 
             override fun onError(error: String) {
                 Log.d(TAG, "loadPlantListFileData onError error: " + error)
-                Toast.makeText(context, "載入失敗", Toast.LENGTH_SHORT).show()
+                ToastHelper.showToast(context, "載入本地資料...")
+
+                getPlantDataFromDB(plantListLiveData, enterType)
             }
 
         })
+    }
+
+    //-----room-----
+
+    fun getPlantDataFromDB(plantListLiveData: MutableLiveData<List<PlantDataModel>>?, enterType: Int) {
+        if(dao == null) {
+            return
+        }
+
+        dao?.getAll()
+            ?.subscribeOn(Schedulers.io())
+            ?.observeOn(AndroidSchedulers.mainThread())
+//            ?.observeOn(Schedulers.newThread())
+            ?.subscribe({
+                Log.d(TAG, "getPlantDataFromDB onSuccess")
+                if (enterType == TYPE_FIRST) {
+                    plantListLiveData?.value = PlantDataModel.flatModelListFromEntityList(it)
+                } else {
+                    plantListLiveData?.postValue(PlantDataModel.flatModelListFromEntityList(it))
+                }
+            }, {
+                Log.d(TAG, "getPlantDataFromDB onError")
+                ToastHelper.showToast(context, "載入失敗")
+            }, {
+
+            }, {
+
+            }).let {
+                dbDisposable = it
+            }
+    }
+
+    fun insertAllPlantDataToDB(plantDataEntitys: List<PlantDataEntity>?) {
+
+        if(plantDataEntitys == null || plantDataEntitys.size == 0 || dao == null) {
+            return
+        }
+
+        dao?.insertAll(plantDataEntitys)
+            ?.subscribeOn(Schedulers.io())
+            ?.observeOn(AndroidSchedulers.mainThread())
+//            ?.observeOn(Schedulers.newThread())
+            ?.subscribe({
+                Log.d(TAG, "insertAllPlantDataToDB onSuccess")
+                ToastHelper.showToast(context, "新增資料庫成功")
+            }, {
+                Log.d(TAG, "insertAllPlantDataToDB onError: " + it.message)
+                ToastHelper.showToast(context, "新增資料庫失敗")
+            }).let {
+                dbDisposable = it
+            }
+    }
+
+    fun onDestory() {
+        if(dbDisposable != null) {
+            dbDisposable?.dispose()
+        }
     }
 }

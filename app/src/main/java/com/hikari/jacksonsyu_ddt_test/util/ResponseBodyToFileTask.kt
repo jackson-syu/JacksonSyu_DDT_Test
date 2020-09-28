@@ -10,8 +10,8 @@ import java.lang.Exception
  */
 class ResponseBodyToFileTask(responseBody: ResponseBody, file: File, callBack: CallBack) : AsyncTask<Unit, Unit, Unit>() {
 
-    private lateinit var responseBody: ResponseBody
-    private lateinit var file: File
+    private var responseBody: ResponseBody
+    private var file: File
     private var callBack: CallBack? = null
 
     init {

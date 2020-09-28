@@ -11,7 +11,7 @@ import androidx.fragment.app.Fragment
 /**
  * Created by hikari on 2020/9/23
  */
-open abstract class BaseFragment<T : ViewDataBinding> : Fragment() {
+abstract class BaseFragment<T : ViewDataBinding> : Fragment() {
 
     lateinit var mBinding: T
     lateinit var mView: View
