@@ -67,14 +67,14 @@ class PlantDataFragment : BaseFragment<FragmentPlantDataBinding>(), ClickPresent
         mBinding.plantDataAlsoKnown.setText(plantDataModel?.F_AlsoKnown)
         mBinding.plantDataBrief.setText(plantDataModel?.F_Brief)
         mBinding.plantDataFeature.setText(plantDataModel?.F_Feature)
-        Log.d(TAG, "F_F_FunctionApplication: " + plantDataModel?.F_FunctionApplication)
+//        Log.d(TAG, "F_FunctionApplication: " + plantDataModel?.F_FunctionApplication)
         mBinding.plantDataFunction.setText(plantDataModel?.F_FunctionApplication)
         mBinding.plantDataUddateTime.setText(plantDataModel?.F_Update)
     }
 
     private fun initBigImg() {
         if(plantDataModel != null) {
-            Glide.with(context).load(plantDataModel?.F_Pic01_URL).into(mBinding.plantDataImg)
+            Glide.with(context!!).load(plantDataModel?.F_Pic01_URL).into(mBinding.plantDataImg)
         }
         var windowWidth = ViewHelper.getWindowWidth(activity!!)
         var imgWidth = windowWidth

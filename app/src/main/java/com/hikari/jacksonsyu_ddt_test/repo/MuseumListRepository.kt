@@ -1,4 +1,4 @@
-package com.hikari.jacksonsyu_ddt_test.data
+package com.hikari.jacksonsyu_ddt_test.repo
 
 import android.content.Context
 import android.util.Log
@@ -14,6 +14,7 @@ import com.hikari.jacksonsyu_ddt_test.room.MuseumDataEntity
 import com.hikari.jacksonsyu_ddt_test.room.MuseumDatabase
 import com.hikari.jacksonsyu_ddt_test.util.IOHelper
 import com.hikari.jacksonsyu_ddt_test.util.ToastHelper
+import io.reactivex.Completable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
@@ -176,28 +177,46 @@ class MuseumListRepository private constructor(context: Context){
 
     }
 
-    fun insertAllMuseumDataToDB(museumDataEntitys: List<MuseumDataEntity>?) {
+    fun insertAllMuseumDataToDB(museumDataEntitys: List<MuseumDataEntity>?, callBack: CallBack? = null) {
         if(museumDataEntitys == null || museumDataEntitys.size == 0 || dao == null) {
+            Log.d(TAG, "insertAllMuseumDataToDB museumDataEntitys is null")
             return
         }
 
-        dao?.insertAll(museumDataEntitys)
-            ?.subscribeOn(Schedulers.io())
+        dao?.deleteAll()
+            ?.andThen(Completable.fromAction({
+                Log.d(TAG, "insertAllMuseumDataToDB deleteAll finish")
+            }))
+            ?.andThen(dao?.insertAll(museumDataEntitys))
+            ?.andThen(Completable.fromAction({
+                Log.d(TAG, "insertAllMuseumDataToDB insertAll finish")
+            }))
             ?.observeOn(AndroidSchedulers.mainThread())
-//            ?.observeOn(Schedulers.newThread())
+            ?.subscribeOn(Schedulers.single())
             ?.subscribe({
                 Log.d(TAG, "insertAllMuseumDataToDB onSuccess")
-                ToastHelper.showToast(context, "新增資料庫成功")
+                ToastHelper.showToast(context, "載入並新增資料庫成功")
+
+                if(callBack != null) {
+                    callBack.onSuccess()
+                }
+
             }, {
                 Log.d(TAG, "insertAllMuseumDataToDB onError: " + it.message)
                 ToastHelper.showToast(context, "新增資料庫失敗")
+
+
+                if(callBack != null) {
+                    callBack.onError(it)
+                }
+
             }).let {
                 dbDisposable = it
             }
 
     }
 
-    fun deleteAllMuseumDataDB() {
+    fun deleteAllMuseumDataDB(callBack: CallBack? = null) {
         if(dao == null) {
             return
         }
@@ -209,18 +228,28 @@ class MuseumListRepository private constructor(context: Context){
             ?.subscribe({
                 Log.d(TAG, "deleteAllMuseumDataDB onSuccess")
 //                ToastHelper.showToast(context, "刪除資料庫成功")
+
+                if(callBack != null) {
+                    callBack.onSuccess()
+                }
+
             }, {
                 Log.d(TAG, "deleteAllMuseumDataDB onError: " + it.message)
 //                ToastHelper.showToast(context, "刪除資料庫失敗")
+
+                if(callBack != null) {
+                    callBack.onError(it)
+                }
             }).let {
                 dbDisposable = it
             }
 
     }
 
-
-
-
+    interface CallBack {
+        fun onSuccess()
+        fun onError(e: Throwable)
+    }
 
     fun onDestory() {
         if(dbDisposable != null) {

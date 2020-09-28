@@ -7,14 +7,13 @@ import android.view.View
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import com.hikari.jacksonsyu_ddt_test.R
-import com.hikari.jacksonsyu_ddt_test.data.PlantListRepository
+import com.hikari.jacksonsyu_ddt_test.repo.PlantListRepository
 import com.hikari.jacksonsyu_ddt_test.model.MuseumDataModel
 import com.hikari.jacksonsyu_ddt_test.model.PlantDataModel
 import com.hikari.jacksonsyu_ddt_test.view.InAppBrowserFragment
 import com.hikari.jacksonsyu_ddt_test.view.MuseumListFragment
 import com.hikari.jacksonsyu_ddt_test.view.PlantDataFragment
 import com.hikari.jacksonsyu_ddt_test.view.ZooMuseumActicvity
-import kotlinx.android.synthetic.main.activity_zoo_museum_acticvity.view.*
 
 /**
  * Created by hikari on 2020/9/26

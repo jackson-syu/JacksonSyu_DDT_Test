@@ -8,7 +8,7 @@ import android.util.Log
 import androidx.appcompat.app.AlertDialog
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
-import com.hikari.jacksonsyu_ddt_test.data.MuseumListRepository
+import com.hikari.jacksonsyu_ddt_test.repo.MuseumListRepository
 import com.hikari.jacksonsyu_ddt_test.model.MuseumDataModel
 import com.hikari.jacksonsyu_ddt_test.view.PlantListFragment
 import com.hikari.jacksonsyu_ddt_test.view.ZooMuseumActicvity

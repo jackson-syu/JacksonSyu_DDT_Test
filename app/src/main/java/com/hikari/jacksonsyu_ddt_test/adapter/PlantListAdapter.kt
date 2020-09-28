@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestListener
 import com.hikari.jacksonsyu_ddt_test.R
 import com.hikari.jacksonsyu_ddt_test.base.ClickPresenter
 import com.hikari.jacksonsyu_ddt_test.databinding.AdapterPlantListHeaderBinding
@@ -129,7 +130,14 @@ class PlantListAdapter() : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
         fun initImg() {
             if(plantDataModel != null) {
-                Glide.with(context).load(plantDataModel?.F_Pic01_URL).into(mBinding.plantListItemImg)
+                if(!plantDataModel?.F_Pic01_URL.equals("")) {
+                    Glide.with(context!!)
+                        .load(plantDataModel?.F_Pic01_URL)
+                        .placeholder(R.mipmap.taipei)
+                        .into(mBinding.plantListItemImg)
+                }else{
+                    mBinding.plantListItemImg.setImageResource(R.mipmap.taipei)
+                }
             }
             var imgWidth = ViewHelper.converDpToPiexl(120f, activity!!).toInt()
             var imgHeight = imgWidth
@@ -176,7 +184,7 @@ class PlantListAdapter() : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         private fun initBigImg() {
 
             if(museumDataModel != null) {
-                Glide.with(context).load(museumDataModel?.E_Pic_URL).into(mBinding.plantListHeaderImg)
+                Glide.with(context!!).load(museumDataModel?.E_Pic_URL).into(mBinding.plantListHeaderImg)
             }
 
             var windowWidth = ViewHelper.getWindowWidth(activity!!)
