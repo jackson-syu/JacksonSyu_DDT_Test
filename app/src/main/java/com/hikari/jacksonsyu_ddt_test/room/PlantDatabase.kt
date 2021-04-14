@@ -21,7 +21,7 @@ abstract class PlantDatabase : RoomDatabase() {
 
         fun getInstance(context: Context): PlantDatabase? {
             INSTANCE ?: synchronized(this) {
-                if(INSTANCE != null) {
+                if (INSTANCE == null) {
                     INSTANCE = create(context)
                 }
             }

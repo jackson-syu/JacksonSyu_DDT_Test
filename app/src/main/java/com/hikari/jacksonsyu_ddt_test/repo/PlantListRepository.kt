@@ -1,6 +1,7 @@
-package com.hikari.jacksonsyu_ddt_test.data
+package com.hikari.jacksonsyu_ddt_test.repo
 
 import android.content.Context
+import android.os.AsyncTask
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.google.gson.Gson
@@ -12,8 +13,10 @@ import com.hikari.jacksonsyu_ddt_test.model.PlantDataModel
 import com.hikari.jacksonsyu_ddt_test.room.PlantDataDao
 import com.hikari.jacksonsyu_ddt_test.room.PlantDataEntity
 import com.hikari.jacksonsyu_ddt_test.room.PlantDatabase
+import com.hikari.jacksonsyu_ddt_test.util.FlatDataTask
 import com.hikari.jacksonsyu_ddt_test.util.IOHelper
 import com.hikari.jacksonsyu_ddt_test.util.ToastHelper
+import io.reactivex.Completable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
@@ -59,6 +62,7 @@ class PlantListRepository private constructor(context: Context){
         this.context = weakContext.get()
 
         dao = PlantDatabase.getInstance(weakContext.get()!!)?.getPlantDataDao()
+        Log.d(TAG, "dao: " + dao)
     }
 
     fun getPlantListLiveData(): MutableLiveData<List<PlantDataModel>>? {
@@ -172,22 +176,30 @@ class PlantListRepository private constructor(context: Context){
     fun insertAllPlantDataToDB(plantDataEntitys: List<PlantDataEntity>?) {
 
         if(plantDataEntitys == null || plantDataEntitys.size == 0 || dao == null) {
+            Log.d(TAG, "insertAllPlantDataToDB plantDataEntitys is null")
             return
         }
 
-        dao?.insertAll(plantDataEntitys)
-            ?.subscribeOn(Schedulers.io())
+        dao?.deleteAll()
+            ?.andThen(Completable.fromAction({
+                Log.d(TAG, "insertAllPlantDataToDB deleteAll finish")
+            }))
+            ?.andThen(dao?.insertAll(plantDataEntitys))
+            ?.andThen(Completable.fromAction({
+                Log.d(TAG, "insertAllPlantDataToDB insertAll finish")
+            }))
             ?.observeOn(AndroidSchedulers.mainThread())
-//            ?.observeOn(Schedulers.newThread())
+            ?.subscribeOn(Schedulers.single())
             ?.subscribe({
                 Log.d(TAG, "insertAllPlantDataToDB onSuccess")
-                ToastHelper.showToast(context, "新增資料庫成功")
+                ToastHelper.showToast(context, "載入並新增資料庫成功")
             }, {
                 Log.d(TAG, "insertAllPlantDataToDB onError: " + it.message)
                 ToastHelper.showToast(context, "新增資料庫失敗")
             }).let {
                 dbDisposable = it
             }
+
     }
 
     fun onDestory() {

@@ -39,14 +39,14 @@ class DownFileUnittest {
 
         //別點位置
 //        val testFile: File = File("D:\\HikariWorkspace\\DDTWorkspace\\app\\src\\test\\res\\", "test.csv")
-        val testFile: File = File("D:\\HikariWorkspace\\DDTWorkspace\\app\\src\\test\\res\\", "test_plant.csv")
+//        val testFile: File = File("D:\\HikariWorkspace\\DDTWorkspace\\app\\src\\test\\res\\", "test_plant.csv")
 
         //動物園館區資料
 //        val testFile: File = File("E:\\android\\DDTWorkspace\\JacksonSyu_DDT_Test\\app\\src\\test\\res\\", "test.csv")
 //        val url: String = ApiConnection.ZOO_MUSEUM_LIST_URL
 
         //植物資料
-//        val testFile: File = File("E:\\android\\DDTWorkspace\\JacksonSyu_DDT_Test\\app\\src\\test\\res\\", "test_plant.csv")
+        val testFile: File = File("E:\\android\\DDTWorkspace\\JacksonSyu_DDT_Test\\app\\src\\test\\res\\", "test_plant.csv")
         val url: String = ApiConnection.PLANT_DATA_URL
 
         DownFileService.downloadCvsFile(url, testFile, object : DownFileService.CallBack {

@@ -29,9 +29,6 @@ class DownFileService : BaseModelService{
 //                .observeOn(Schedulers.newThread())
                 .subscribe({
 
-//                    IOHelper.writeResponseToFile(it.body()!!, file)
-//                    IOHelper.writeResponseToCsvFile(it.body()!!, file)
-
                     ResponseBodyToFileTask(it.body()!!, file, object : ResponseBodyToFileTask.CallBack {
                         override fun onSuccess() {
                             if(callback != null) {
@@ -46,11 +43,6 @@ class DownFileService : BaseModelService{
                         }
 
                     }).execute()
-
-
-//                    if(callback != null) {
-//                        callback.onSuccess(it.message(), it.code())
-//                    }
 
                 }, {
 

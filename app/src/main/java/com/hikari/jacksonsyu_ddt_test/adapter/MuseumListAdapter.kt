@@ -100,7 +100,7 @@ class MuseumListAdapter() : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         }
 
         private fun initImg() {
-            Glide.with(context).load(museumDataModel?.E_Pic_URL).into(mBinding.museumListItemImg)
+            Glide.with(context!!).load(museumDataModel?.E_Pic_URL).into(mBinding.museumListItemImg)
             var imgWidth = ViewHelper.converDpToPiexl(120f, context!!).toInt()
             var imgHeight = imgWidth
             mBinding.museumListItemImg.set(imgWidth, imgHeight, 0f, 0f)
