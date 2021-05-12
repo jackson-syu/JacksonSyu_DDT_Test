@@ -83,14 +83,10 @@ dependencies {
     testImplementation("com.github.doyaaaaaken:kotlin-csv-jvm:0.11.0")
 
     //glide
-<<<<<<< HEAD
     implementation 'com.github.bumptech.glide:glide:4.0.0'
 
     //photoview
     implementation 'com.github.chrisbanes.photoview:library:1.2.4'
-=======
-    implementation 'com.github.bumptech.glide:glide:4.11.0'
->>>>>>> 972541f0854e18975a3092d2ac13c57873c877e2
 }
 //获取编译时间
 static def releaseTime() {
